@@ -18,8 +18,6 @@ services:
     volumes:
       - server-local-data:/app/packages/twenty-server/${STORAGE_LOCAL_PATH:-.local-storage}
       - docker-data:/app/docker-data
-    ports:
-      - "3000:3000"
     environment:
       PORT: 3000
       PG_DATABASE_URL: postgres://twenty:twenty@db:5432/default
