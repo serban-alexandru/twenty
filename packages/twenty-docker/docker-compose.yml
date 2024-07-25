@@ -22,16 +22,11 @@ services:
       PORT: 3000
       PG_DATABASE_URL: postgres://twenty:twenty@db:5432/default
       SERVER_URL: http://localhost:3000
-      FRONT_BASE_URL: ${FRONT_BASE_URL:-$SERVER_URL}
+      FRONT_BASE_URL: http://localhost:3000
       MESSAGE_QUEUE_TYPE: pg-boss
 
       ENABLE_DB_MIGRATIONS: "true"
 
-      SIGN_IN_PREFILLED: ${SIGN_IN_PREFILLED}
-      STORAGE_TYPE: ${STORAGE_TYPE}
-      STORAGE_S3_REGION: ${STORAGE_S3_REGION}
-      STORAGE_S3_NAME: ${STORAGE_S3_NAME}
-      STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
       ACCESS_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
       LOGIN_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
       REFRESH_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
@@ -54,15 +49,11 @@ services:
     environment:
       PG_DATABASE_URL: postgres://twenty:twenty@db:5432/default
       SERVER_URL: http://localhost:3000
-      FRONT_BASE_URL: ${FRONT_BASE_URL:-$SERVER_URL}
+      FRONT_BASE_URL: http://localhost:3000
       MESSAGE_QUEUE_TYPE: pg_boss
 
       ENABLE_DB_MIGRATIONS: "false" # it already runs on the server
 
-      STORAGE_TYPE: ${STORAGE_TYPE}
-      STORAGE_S3_REGION: ${STORAGE_S3_REGION}
-      STORAGE_S3_NAME: ${STORAGE_S3_NAME}
-      STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
       ACCESS_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
       LOGIN_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
       REFRESH_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
