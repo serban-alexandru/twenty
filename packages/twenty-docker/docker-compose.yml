@@ -14,7 +14,7 @@ services:
       && chown -R 1000:1000 /tmp/docker-data"
 
   server:
-    image: twentycrm/twenty:${TAG}
+    image: twentycrm/twenty:latest
     volumes:
       - server-local-data:/app/packages/twenty-server/${STORAGE_LOCAL_PATH:-.local-storage}
       - docker-data:/app/docker-data
@@ -22,10 +22,10 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
-      PG_DATABASE_URL: postgres://twenty:twenty@${PG_DATABASE_HOST}/default
-      SERVER_URL: ${SERVER_URL}
+      PG_DATABASE_URL: postgres://twenty:twenty@db:5432/default
+      SERVER_URL: http://localhost:3000
       FRONT_BASE_URL: ${FRONT_BASE_URL:-$SERVER_URL}
-      MESSAGE_QUEUE_TYPE: ${MESSAGE_QUEUE_TYPE}
+      MESSAGE_QUEUE_TYPE: pg-boss
 
       ENABLE_DB_MIGRATIONS: "true"
 
@@ -34,10 +34,10 @@ services:
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
       STORAGE_S3_NAME: ${STORAGE_S3_NAME}
       STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
-      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      LOGIN_TOKEN_SECRET: ${LOGIN_TOKEN_SECRET}
-      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
-      FILE_TOKEN_SECRET: ${FILE_TOKEN_SECRET}
+      ACCESS_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      LOGIN_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      REFRESH_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      FILE_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
     depends_on:
       change-vol-ownership:
         condition: service_completed_successfully
@@ -51,13 +51,13 @@ services:
     restart: always
 
   worker:
-    image: twentycrm/twenty:${TAG}
+    image: twentycrm/twenty:latest
     command: ["yarn", "worker:prod"]
     environment:
-      PG_DATABASE_URL: postgres://twenty:twenty@${PG_DATABASE_HOST}/default
-      SERVER_URL: ${SERVER_URL}
+      PG_DATABASE_URL: postgres://twenty:twenty@db:5432/default
+      SERVER_URL: http://localhost:3000
       FRONT_BASE_URL: ${FRONT_BASE_URL:-$SERVER_URL}
-      MESSAGE_QUEUE_TYPE: ${MESSAGE_QUEUE_TYPE}
+      MESSAGE_QUEUE_TYPE: pg_boss
 
       ENABLE_DB_MIGRATIONS: "false" # it already runs on the server
 
@@ -65,10 +65,10 @@ services:
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
       STORAGE_S3_NAME: ${STORAGE_S3_NAME}
       STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
-      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      LOGIN_TOKEN_SECRET: ${LOGIN_TOKEN_SECRET}
-      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
-      FILE_TOKEN_SECRET: ${FILE_TOKEN_SECRET}
+      ACCESS_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      LOGIN_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      REFRESH_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
+      FILE_TOKEN_SECRET: hK2n95N+98TODkzQaPa7KywibXKr1sBsyBudq61J1gI=
     depends_on:
       db:
         condition: service_healthy
@@ -77,7 +77,7 @@ services:
     restart: always
 
   db:
-    image: twentycrm/twenty-postgres:${TAG}
+    image: twentycrm/twenty-postgres:latest
     volumes:
       - db-data:/bitnami/postgresql
     environment:
