@@ -81,7 +81,7 @@ services:
     volumes:
       - db-data:/bitnami/postgresql
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD}
+      POSTGRES_PASSWORD: replace_me_with_a_strong_password
     healthcheck:
       test: pg_isready -U twenty -d default
       interval: 5s
